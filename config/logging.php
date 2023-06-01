@@ -113,6 +113,14 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'validation' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/validation/validation.log'),
+            'level' => 'warning',
+            'days' => 100,
+        ],
+
     ],
 
 ];
