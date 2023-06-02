@@ -5,4 +5,9 @@
 - (for windows) ren .env.example .env 
 - php artisan key:generate
 - php artisan migrate --seed
+- php artisan jwt:secret
 - php artisan serve
+
+header postman
+- Accept : application/json
+- Authorization : Bearer {{accessToken}}

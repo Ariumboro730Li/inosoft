@@ -12,6 +12,7 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.5",
+        "tymon/jwt-auth": "^1.0@dev",
         "yajra/laravel-datatables-oracle": "^9.21"
     },
     "require-dev": {
@@ -20,7 +21,8 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",
-        "phpunit/phpunit": "^9.5.10"
+        "phpunit/php-code-coverage": "^9.2",
+        "phpunit/phpunit": "^9.6"
     },
     "autoload": {
         "psr-4": {
