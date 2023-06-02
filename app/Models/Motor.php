@@ -10,7 +10,8 @@ class Motor extends Model
 {
     use HasFactory;
 
-    protected $visible = ['mesin', 'tipe_suspensi', 'tipe_transmisi', 'stok', 'kendaraan'];
+    protected $visible = ['_id', 'mesin', 'tipe_suspensi', 'tipe_transmisi', 'stok', 'kendaraan'];
+    protected $fillable = ['stok'];
 
     /**
      * Get the related Kendaraan record.

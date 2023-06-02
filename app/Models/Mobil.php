@@ -10,7 +10,8 @@ class Mobil extends Model
 {
     use HasFactory;
 
-    protected $visible = ['mesin', 'kapasitas', 'tipe', 'stok', 'kendaraan'];
+    protected $fillable = ['stok'];
+    protected $visible = ['_id', 'mesin', 'kapasitas', 'tipe', 'stok', 'kendaraan'];
 
     /**
      * Get the related Kendaraan record.

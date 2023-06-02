@@ -15,7 +15,11 @@ class CreatePenjualanTable extends Migration
     {
         Schema::connection('mongodb')->create('penjualans', function (Blueprint $collection) {
             $collection->index('kendaraan_id');
+            $collection->string('nama');
+            $collection->string('type_kendaraan');
             $collection->date('tanggal');
+            $collection->string('jumlah');
+            $collection->string('alamat');
             $collection->timestamps();
         });
     }
