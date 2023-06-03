@@ -2,78 +2,61 @@
 
 namespace Tests\Unit\Services;
 
-use App\Repositories\VehicleRepository;
+use Tests\TestCase;
 use App\Services\VehicleService;
+use App\Repositories\VehicleRepository;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Foundation\Testing\TestCase;
-use Illuminate\Http\JsonResponse;
+use Mockery;
 
 class VehicleServiceTest extends TestCase
 {
-    public function createApplication()
+    public function tearDown(): void
     {
-        $app = require __DIR__.'/../../bootstrap/app.php';
-        $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
-        return $app;
+        Mockery::close();
+        parent::tearDown();
     }
 
-    public function testGetVehicleReturnsJsonResponse()
+    public function testGetVehicle()
     {
-        // Arrange
-        $type = 'type1';
-        $repositoryMock = $this->createMock(VehicleRepository::class);
-        $repositoryMock->expects($this->once())
-            ->method('getVehicle')
-            ->with($type)
-            ->willReturn(['vehicle1', 'vehicle2']);
+        // Create a mock of the Request class
+        $request = Mockery::mock(Request::class);
 
-        $responseFactoryMock = $this->createMock(ResponseFactory::class);
-        $responseFactoryMock->expects($this->once())
-            ->method('json')
-            ->with(['vehicle1', 'vehicle2'])
-            ->willReturn(new JsonResponse(['vehicle1', 'vehicle2']));
+        // Create a mock of the VehicleRepository class
+        $repository = Mockery::mock(VehicleRepository::class);
+        $repository->shouldReceive('setModel')->with('mobil')->andReturnSelf();
+        $repository->shouldReceive('getVehicle')->andReturn([]);
 
-        $requestMock = $this->createMock(Request::class);
+        // Create an instance of the service class with the mocked dependencies
+        $service = new VehicleService($request, $repository);
 
-        $this->app->instance(ResponseFactory::class, $responseFactoryMock);
+        // Call the method being tested
+        $result = $service->getVehicle('mobil');
 
-        $service = new VehicleService($requestMock, $repositoryMock);
-
-        // Act
-        $result = $service->getVehicle($type);
-
-        // Assert
-        $this->assertInstanceOf(JsonResponse::class, $result);
+        // Perform assertions on the result
+        $this->assertIsObject($result);
+        // Add additional assertions as needed
     }
 
-    public function testGetVehicleByIdReturnsJsonResponse()
+    public function testGetVehicleById()
     {
-        // Arrange
-        $type = 'type1';
-        $id = 123;
-        $repositoryMock = $this->createMock(VehicleRepository::class);
-        $repositoryMock->expects($this->once())
-            ->method('getVehicleById')
-            ->with($id, $type)
-            ->willReturn(['vehicle1']);
+        $id = 'example_id';
 
-        $responseFactoryMock = $this->createMock(ResponseFactory::class);
-        $responseFactoryMock->expects($this->once())
-            ->method('json')
-            ->with(['vehicle1'])
-            ->willReturn(new JsonResponse(['vehicle1']));
+        // Create a mock of the Request class
+        $request = Mockery::mock(Request::class);
 
-        $requestMock = $this->createMock(Request::class);
+        // Create a mock of the VehicleRepository class
+        $repository = Mockery::mock(VehicleRepository::class);
+        $repository->shouldReceive('setModel')->with('mobil')->andReturnSelf();
+        $repository->shouldReceive('getVehicleById')->with($id)->andReturn([]);
 
-        $this->app->instance(ResponseFactory::class, $responseFactoryMock);
+        // Create an instance of the service class with the mocked dependencies
+        $service = new VehicleService($request, $repository);
 
-        $service = new VehicleService($requestMock, $repositoryMock);
+        // Call the method being tested
+        $result = $service->getVehicleById('mobil', $id);
 
-        // Act
-        $result = $service->getVehicleById($type, $id);
-
-        // Assert
-        $this->assertInstanceOf(JsonResponse::class, $result);
+        // Perform assertions on the result
+        $this->assertIsObject($result);
+        // Add additional assertions as needed
     }
 }

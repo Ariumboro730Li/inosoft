@@ -18,11 +18,11 @@ class VehicleService
 
     public function getVehicle(string $type): object
     {
-        return response()->json($this->repository->getVehicle($type));
+        return response()->json($this->repository->setModel($type)->getVehicle());
     }
 
     public function getVehicleById(string $type, $id): object
     {
-        return response()->json($this->repository->getVehicleById($id, $type));
+        return response()->json($this->repository->setModel($type)->getVehicleById($id));
     }
 }

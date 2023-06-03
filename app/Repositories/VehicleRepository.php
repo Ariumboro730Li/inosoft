@@ -2,31 +2,39 @@
 
 namespace App\Repositories;
 
-use App\Repositories\MotorRepository;
-use App\Repositories\MobilRepository;
+use App\Models\Mobil;
+use App\Models\Motor;
 
 class VehicleRepository
 {
-    public function getVehicle($type)
-    {
-        if ($type === 'mobil') {
-            return (new MobilRepository())->getVehicle();
-        } elseif ($type === 'motor') {
-            return (new MotorRepository())->getVehicle();
-        }
+    protected $model;
+    protected Mobil $mobil;
+    protected Motor $motor;
 
-        return null;
+    public function __construct(Mobil $mobil, Motor $motor)
+    {
+        $this->mobil = $mobil;
+        $this->motor = $motor;
     }
 
-    public function getVehicleById($id, $type)
-    {
-        if ($type === 'mobil') {
-            return (new MobilRepository())->getVehicleById($id);
-        } elseif ($type === 'motor') {
-            return (new MotorRepository())->getVehicleById($id);
+    public function setModel($model){
+        if ($model == "mobil") {
+            $this->model = $this->mobil;
+        } else {
+            $this->model = $this->motor;
         }
 
-        return null;
+        return $this;
+    }
+
+    public function getVehicle()
+    {
+        return $this->model::with('kendaraan')->get();
+    }
+
+    public function getVehicleById($id)
+    {
+        return $this->model::with('kendaraan')->where('_id', $id)->first();
     }
 }
 
