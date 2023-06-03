@@ -4,6 +4,7 @@ namespace App\Services\Actions;
 
 use App\Models\Penjualan;
 use Illuminate\Http\Request;
+use MongoDB\BSON\UTCDateTime;
 
 class StoreService
 {
@@ -16,7 +17,7 @@ class StoreService
         $this->request = $request;
     }
 
-    public function applyActions(?object $vehicle){
+    public function applyActions(object $vehicle){
         if ($vehicle && $vehicle->stok >= $this->request->jumlah) {
             $this->updateVehicleStock($vehicle);
             $this->storeSales();
@@ -39,7 +40,8 @@ class StoreService
     }
 
     public function storeSales(){
-        $penjualan = Penjualan::create($this->request->all());
+        $data = array_merge($this->request->all(), ["tanggal" => new UTCDateTime]);
+        $penjualan = Penjualan::create($data);
         $this->penjualan = $penjualan->toArray();
         return $this;
     }

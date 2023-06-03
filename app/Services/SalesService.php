@@ -22,24 +22,28 @@ class SalesService
         $this->repository = $repository;
         $this->vehicleRepository = $vehicleRepository;
         $this->storeService = $storeService;
+
     }
 
     public function storeSales(string $type): array
     {
-        $this->request->merge([
-            "type_kendaraan" => $type,
-            "tanggal" => new UTCDateTime
-        ]);
         $vehicle = $this->vehicleRepository->getVehicleById($this->request->kendaraan_id, $type);
-        return $this->storeService->applyActions($vehicle)->toArray();
+        if ($vehicle) {
+            return $this->storeService->applyActions($vehicle)->toArray();
+        }
+
+        return ['error' => 'Vehicle not found'];
     }
 
-    public function reportSales(string $type){
+
+    public function reportSales(string $type)
+    {
         $data = $this->repository->groupSales();
         foreach ($data as $key => $value) {
             $vehicle = $this->vehicleRepository->getVehicleById($value["kendaraan_id"], $type);
             if ($vehicle) {
-                $result[] = array_merge($vehicle->toArray(), ["total_penjualan" => $value["total_penjualan"], "jumlah_terjual" => $value["jumlah_terjual"]]);
+                $vehicleArray = is_array($vehicle) ? $vehicle : $vehicle->toArray();
+                $result[] = array_merge($vehicleArray, ["total_penjualan" => $value["total_penjualan"], "jumlah_terjual" => $value["jumlah_terjual"]]);
             }
         }
         return response()->json($result);
@@ -49,6 +53,7 @@ class SalesService
         $penjualan = $this->repository->reportSalesById($type, $id);
         foreach ($penjualan as $key => $value) {
             $vehicle = $this->vehicleRepository->getVehicleById($value["kendaraan_id"], $type);
+
             $data[] = array_merge($value->toArray(), ["data" => $vehicle->toArray()]);
         }
         return response()->json($data ?? ["Tidak ada data penjualan untuk $type ID $id"]);

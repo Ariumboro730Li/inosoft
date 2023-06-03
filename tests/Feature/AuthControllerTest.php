@@ -25,7 +25,6 @@ class AuthControllerTest extends TestCase
         ];
 
         $response = $this->post('/api/register', $userData);
-
         $response->assertStatus(201);
         $this->assertDatabaseHas('users', ['email' => $userData['email']]);
     }
@@ -56,11 +55,8 @@ class AuthControllerTest extends TestCase
     public function testLogout()
     {
         $user = User::factory()->create();
-
         $token = auth()->login($user);
-
         $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])->post('/api/logout');
-
         $response->assertStatus(200);
         $this->assertGuest();
     }
@@ -73,11 +69,8 @@ class AuthControllerTest extends TestCase
     public function testRefresh()
     {
         $user = User::factory()->create();
-
         $token = auth()->login($user);
-
         $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])->post('/api/refresh');
-
         $response->assertStatus(200);
         $response->assertJsonStructure(['access_token', 'token_type', 'expires_in']);
     }
