@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "9831d471-5229-4ee6-8285-675e7536e6f4",
+		"name": "kendaraan",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13533711",
+		"_collection_link": "https://bold-shuttle-694017.postman.co/workspace/inosoft~0d57d06b-cc42-4ddf-aca1-ceb95906ea4e/collection/13533711-9831d471-5229-4ee6-8285-675e7536e6f4?action=share&creator=13533711&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "report by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/mobil/report/647c6937099e20890108d934",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"mobil",
+						"report",
+						"647c6937099e20890108d934"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "report",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/{{type_kendaran}}/report",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"{{type_kendaran}}",
+						"report"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "stok",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/{{type_kendaran}}/stok",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"{{type_kendaran}}",
+						"stok"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "stok by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/{{type_kendaran}}/stok/647c6937099e20890108d934",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"{{type_kendaran}}",
+						"stok",
+						"647c6937099e20890108d934"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sale",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "kendaraan_id",
+							"value": "647c6937099e20890108d934",
+							"type": "text"
+						},
+						{
+							"key": "nama",
+							"value": "orang kesatu",
+							"type": "text"
+						},
+						{
+							"key": "jumlah",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "alamat",
+							"value": "jakarta",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/api/{{type_kendaran}}/sale",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"{{type_kendaran}}",
+						"sale"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDEvYXBpL2xvZ2luIiwiaWF0IjoxNjg1ODc1MDA1LCJleHAiOjE2ODU4Nzg2MDUsIm5iZiI6MTY4NTg3NTAwNSwianRpIjoiTG1QeEdTS245emRyb1B2SyIsInN1YiI6IjY0N2M2OTNhN2Q2M2Y0YWRkNDA5OWJlMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.46zjPI9pmGK69VmojnoZeYpVtEeFmAKpmRShM2q1VUc",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
