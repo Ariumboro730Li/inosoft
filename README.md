@@ -14,6 +14,6 @@ header postman
 - Accept : application/json
 - Authorization : Bearer {{accessToken}}
 
-- Aditional Folders
-    Coverage : the last test coverage data
-    Collections : postman collections, consist of : auth, kendaraan, user, and global env
+Aditional Folders
+- Coverage : the last test coverage data
+- Collections : postman collections, consist of : auth, kendaraan, user, and global env
