@@ -2,13 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Traits\MessageTrait;
+use App\Http\Requests\Traits\ErrorThrownTrait;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Support\Facades\Log;
 
 class StoreRequest extends FormRequest
 {
+    use MessageTrait, ErrorThrownTrait;
     /**
      * Get the validation rules that apply to the request.
      *
@@ -22,16 +22,6 @@ class StoreRequest extends FormRequest
             'jumlah' => 'required',
             'alamat' =>  'required',
         ];
-    }
-
-    public function failedValidation(Validator $validator)
-    {
-        Log::channel('validation')->error($validator->errors());
-        throw new HttpResponseException(response()->json([
-            'success'   => false,
-            'message'   => 'Validation errors',
-            'data'      => $validator->errors()
-        ], 400));
     }
 
 }

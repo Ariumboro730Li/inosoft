@@ -9,26 +9,43 @@ use MongoDB\BSON\UTCDateTime;
 class StoreService
 {
     protected Request $request;
+    protected $data;
+    protected string $type;
     protected array $vehicle;
     protected array $penjualan;
+    protected Penjualan $penjualanModel;
 
-    public function __construct(Request $request)
+    public function __construct(Request $request, Penjualan $penjualanModel)
     {
         $this->request = $request;
+        $this->penjualanModel = $penjualanModel;
     }
 
-    public function applyActions(object $vehicle){
-        if ($vehicle && $vehicle->stok >= $this->request->jumlah) {
-            $this->updateVehicleStock($vehicle);
+    public function setType($type){
+        $this->type = $type;
+        return $this;
+    }
+
+    public function setDataSale($data){
+        $this->data = $data;
+        return $this;
+    }
+
+    private function isSufficientStock(){
+        return $this->data->stok >= $this->request->jumlah;
+    }
+
+    public function applyActions(){
+        if ($this->data && $this->isSufficientStock()) {
+            $this->updateVehicleStock($this->data);
             $this->storeSales();
         } else {
-            if (!$vehicle) {
+            if (!$this->data) {
                 $this->vehicle = ["ID Tidak Ada"];
-            } else if ($vehicle->stok < $this->request->jumlah) {
+            } else if (!$this->isSufficientStock()) {
                 $this->vehicle = ["Stok Tidak Cukup"];
             }
         }
-
         return $this;
     }
 
@@ -40,8 +57,11 @@ class StoreService
     }
 
     public function storeSales(){
-        $data = array_merge($this->request->all(), ["tanggal" => new UTCDateTime]);
-        $penjualan = Penjualan::create($data);
+        $data = array_merge($this->request->all(), [
+            "type_kendaraan" => $this->type,
+            "tanggal" => new UTCDateTime
+        ]);
+        $penjualan = $this->penjualanModel->create($data);
         $this->penjualan = $penjualan->toArray();
         return $this;
     }

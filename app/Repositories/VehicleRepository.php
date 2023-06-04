@@ -29,7 +29,7 @@ class VehicleRepository
 
     public function getVehicle()
     {
-        return $this->model::with('kendaraan')->get();
+        return $this->model::with('kendaraan')->whereNotNull("_id")->get();
     }
 
     public function getVehicleById($id)

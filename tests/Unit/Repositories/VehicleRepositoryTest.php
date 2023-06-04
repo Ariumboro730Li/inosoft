@@ -19,14 +19,16 @@ class VehicleRepositoryTest extends TestCase
 
     public function testGetVehicle()
     {
-        // Create a mock of the Mobil model
+        // ? Create a mock of the Mobil model
         $mobil = Mockery::mock(Mobil::class);
         $mobil->shouldReceive('with')->with('kendaraan')->andReturnSelf();
+        $mobil->shouldReceive('whereNotNull')->with('_id')->andReturnSelf();
         $mobil->shouldReceive('get')->andReturn([]);
 
-        // Create a mock of the Mobil model
+        // ? Create a mock of the Mobil model
         $motor = Mockery::mock(Motor::class);
         $motor->shouldReceive('with')->with('kendaraan')->andReturnSelf();
+        $motor->shouldReceive('whereNotNull')->with('_id')->andReturnSelf();
         $motor->shouldReceive('get')->andReturn([]);
 
         // Create an instance of the repository with the mocked dependencies
@@ -46,7 +48,7 @@ class VehicleRepositoryTest extends TestCase
     {
         $kendaraan_id = Str::random(10);
 
-        // Create a mock of the Mobil model
+        // ? Create a mock of the Mobil model
         $mobil = Mockery::mock(Mobil::class);
         $mobil->shouldReceive('with')->with('kendaraan')->andReturnSelf();
         $mobil->shouldReceive('where')->with('_id', $kendaraan_id)->andReturnSelf();

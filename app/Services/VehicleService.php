@@ -18,11 +18,21 @@ class VehicleService
 
     public function getVehicle(string $type): object
     {
-        return response()->json($this->repository->setModel($type)->getVehicle());
+        $vehicles = $this->repository->setModel($type)->getVehicle();
+        return $this->returnResponse($vehicles);
     }
 
     public function getVehicleById(string $type, $id): object
     {
-        return response()->json($this->repository->setModel($type)->getVehicleById($id));
+        $vehicles = $this->repository->setModel($type)->getVehicleById($id);
+        return $this->returnResponse($vehicles);
+    }
+
+    private function returnResponse($vehicles){
+        if (!$vehicles) {
+            return response()->json(['error' => 'Vehicle not found'], 404);
+        }
+
+        return response()->json($vehicles, 200);
     }
 }

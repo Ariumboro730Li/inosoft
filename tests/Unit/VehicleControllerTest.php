@@ -18,7 +18,7 @@ class VehicleControllerTest extends TestCase
         $vehicleServiceMock->expects($this->once())
             ->method('getVehicle')
             ->with('type1')
-            ->willReturn((object) ['vehicle1', 'vehicle2']);
+            ->willReturn((object) ['Innova Zenix', 'Hyundai Palisade']);
 
         $controller = new VehicleController(
             $this->createMock(Request::class),
@@ -30,7 +30,7 @@ class VehicleControllerTest extends TestCase
         $result = $controller->stok('type1');
 
         // Assert
-        $this->assertEquals((object) ['vehicle1', 'vehicle2'], $result);
+        $this->assertEquals((object) ['Innova Zenix', 'Hyundai Palisade'], $result);
     }
 
     public function testStokByIdReturnsData()
@@ -40,7 +40,7 @@ class VehicleControllerTest extends TestCase
         $vehicleServiceMock->expects($this->once())
             ->method('getVehicleById')
             ->with('type1', 123)
-            ->willReturn((object) ['vehicle1']);
+            ->willReturn((object) ['Innova Zenix']);
 
         $controller = new VehicleController(
             $this->createMock(Request::class),
@@ -52,7 +52,7 @@ class VehicleControllerTest extends TestCase
         $result = $controller->stokById('type1', 123);
 
         // Assert
-        $this->assertEquals((object) ['vehicle1'], $result);
+        $this->assertEquals((object) ['Innova Zenix'], $result);
     }
 
     public function testStoreSalesCallsSalesService()

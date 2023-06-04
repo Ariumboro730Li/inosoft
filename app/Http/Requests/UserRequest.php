@@ -3,13 +3,13 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Support\Facades\Log;
+use App\Http\Requests\Traits\MessageTrait;
+use App\Http\Requests\Traits\ErrorThrownTrait;
 
 class UserRequest extends FormRequest
 {
 
+    use ErrorThrownTrait, MessageTrait;
     /**
      * Get the validation rules that apply to the request.
      *
@@ -21,15 +21,5 @@ class UserRequest extends FormRequest
         return [
             "limit" => "required|integer",
         ];
-    }
-
-    public function failedValidation(Validator $validator)
-    {
-        Log::channel('validation')->error($validator->errors());
-        throw new HttpResponseException(response()->json([
-            'success'   => false,
-            'message'   => 'Validation errors',
-            'data'      => $validator->errors()
-        ], 400));
     }
 }

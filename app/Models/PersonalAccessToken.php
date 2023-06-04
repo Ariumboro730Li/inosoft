@@ -69,6 +69,7 @@ class PersonalAccessToken extends Model implements HasAbilities
         }
     }
 
+
     /**
      * Determine if the token has a given ability.
      *

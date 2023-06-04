@@ -7,6 +7,8 @@
 - php artisan migrate --seed
 - php artisan jwt:secret
 - php artisan serve
+- php artisan test
+- php artisan test --coverage-html=coverage 
 
 header postman
 - Accept : application/json

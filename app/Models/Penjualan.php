@@ -17,7 +17,7 @@ class Penjualan extends Model
         "tanggal" => "date:Y-m-d H:i:s"
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
+    public function serializeDate(DateTimeInterface $date)
     {
         return $date->setTimezone("Asia/Jakarta")->format("Y-m-d H:i:s");
     }
