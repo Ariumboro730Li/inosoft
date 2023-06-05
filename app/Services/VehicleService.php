@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class VehicleService
 {
-    protected $request;
-    protected $repository;
+    protected Request $request;
+    protected VehicleRepository $repository;
 
     public function __construct(Request $request, VehicleRepository $vehicleRepository)
     {
@@ -30,7 +30,7 @@ class VehicleService
 
     private function returnResponse($vehicles){
         if (!$vehicles) {
-            return response()->json(['error' => 'Vehicle not found'], 404);
+            return response()->json(['Kendaraan tidak ditemukan'], 404);
         }
 
         return response()->json($vehicles, 200);

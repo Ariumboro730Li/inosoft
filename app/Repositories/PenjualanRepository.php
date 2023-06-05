@@ -43,7 +43,7 @@ class PenjualanRepository
         return $result;
     }
 
-    public function reportSalesById(string $type, $id){
+    public function reportSalesById(string $type, string $id){
         return Penjualan::where("type_kendaraan", $type)->where("kendaraan_id", $id)->get();
     }
 }

@@ -10,11 +10,11 @@ use App\Repositories\PenjualanRepository;
 class SalesService
 {
 
-    protected $request;
-    protected $repository;
-    protected $vehicleRepository;
-    protected $storeService;
-    private $http_code = 200;
+    protected Request $request;
+    protected PenjualanRepository $repository;
+    protected VehicleRepository $vehicleRepository;
+    protected StoreService $storeService;
+    private int $http_code = 200;
 
 
     public function __construct(Request $request, PenjualanRepository $repository, VehicleRepository $vehicleRepository, StoreService $storeService)
@@ -30,8 +30,9 @@ class SalesService
         $vehicle = $this->vehicleRepository->setModel($type)->getVehicleById($this->request->kendaraan_id);
         if ($vehicle) {
             $result = $this->storeService->setType($type)->setDataSale($vehicle)->applyActions()->toArray();
+            $this->http_code = 201;
         } else {
-            $result = ["error" => "Kendaraan tidak ditemukan"];
+            $result = ["Kendaraan tidak ditemukan"];
             $this->http_code = 404;
         }
         return response()->json($result, $this->http_code);

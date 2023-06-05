@@ -67,7 +67,7 @@ class SalesServiceTest extends TestCase
         );
 
         $result = $salesService->storeSales($type);
-        $this->assertEquals(200, $result->getStatusCode());
+        $this->assertEquals(201, $result->getStatusCode());
     }
 
     public function testStoreSalesWithInvalidVehicle()

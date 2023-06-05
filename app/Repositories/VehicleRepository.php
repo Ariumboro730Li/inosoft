@@ -7,7 +7,7 @@ use App\Models\Motor;
 
 class VehicleRepository
 {
-    protected $model;
+    protected object $model;
     protected Mobil $mobil;
     protected Motor $motor;
 
@@ -17,7 +17,7 @@ class VehicleRepository
         $this->motor = $motor;
     }
 
-    public function setModel($model){
+    public function setModel(string $model){
         if ($model == "mobil") {
             $this->model = $this->mobil;
         } else {
